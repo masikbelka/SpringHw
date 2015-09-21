@@ -13,6 +13,10 @@ header {
 #body {
     height: 80%;
     background: url('../images/body.png') no-repeat;
+    color: black;
+}
+#content {
+    width: 80%;
 }
 .top_block {
     width: 100%;
