@@ -1,0 +1,35 @@
+Task 1, java 7, serial : time - 276984240
+Task 1, java 7, serial : time - 151994060
+Task 1, java 7, serial : time - 82774365
+Task 1, java 7, serial : time - 106374538
+Task 1, java 7, serial : time - 71609864
+
+Task 1, java 8, serial : time - 254727431
+Task 1, java 8, serial : time - 183753506
+Task 1, java 8, serial : time - 123376445
+Task 1, java 8, serial : time - 222234373
+Task 1, java 8, serial : time - 104295792
+
+Task 1, java 8, parallel : time - 232743117
+Task 1, java 8, parallel : time - 80119842
+Task 1, java 8, parallel : time - 28934348
+Task 1, java 8, parallel : time - 126323989
+Task 1, java 8, parallel : time - 51425077
+
+Task 2, java 7, serial : time - 295233252
+Task 2, java 7, serial : time - 189037782
+Task 2, java 7, serial : time - 161191998
+Task 2, java 7, serial : time - 166722227
+Task 2, java 7, serial : time - 192583045
+
+Task 2, java 8, serial : time - 445588805
+Task 2, java 8, serial : time - 228914387
+Task 2, java 8, serial : time - 243419251
+Task 2, java 8, serial : time - 221739989
+Task 2, java 8, serial : time - 362548668
+
+Task 1, java 8, parallel : time - 468777405
+Task 1, java 8, parallel : time - 281862250
+Task 1, java 8, parallel : time - 213227181
+Task 1, java 8, parallel : time - 135279513
+Task 1, java 8, parallel : time - 98708233

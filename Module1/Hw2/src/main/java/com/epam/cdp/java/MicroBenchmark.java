@@ -1,4 +1,4 @@
-package main.java.com.epam.cdp.java;
+package com.epam.cdp.java;
 
 import java.io.IOException;
 import java.nio.file.Files;
