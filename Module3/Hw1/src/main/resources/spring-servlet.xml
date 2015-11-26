@@ -5,22 +5,41 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+       http://www.springframework.org/schema/util/spring-util-4.0.xsd ">
 
-    <bean id="eventDao" class="com.epam.cdp.spring.dao.impl.EventDaoImpl"/>
-    <bean id="ticketDao" class="com.epam.cdp.spring.dao.impl.TicketDaoImpl"/>
-    <bean id="userDao" class="com.epam.cdp.spring.dao.impl.UserDaoImpl"/>
+    <bean id="emailValidator" class="com.epam.cdp.spring.service.EmailValidator"/>
 
-    <bean id="eventService" class="com.epam.cdp.spring.service.impl.EventServiceImpl"/>
-    <bean id="ticketService" class="com.epam.cdp.spring.service.impl.TicketServiceImpl"/>
-    <bean id="userService" class="com.epam.cdp.spring.service.impl.UserServiceImpl"/>
+    <!--DAOs beans-->
+    <bean id="eventDao" class="com.epam.cdp.spring.dao.impl.EventDaoImpl">
+        <property name="eventStorage" ref="eventStorage"/>
+    </bean>
+    <bean id="ticketDao" class="com.epam.cdp.spring.dao.impl.TicketDaoImpl">
+        <property name="ticketStorage" ref="ticketStorage"/>
+    </bean>
+    <bean id="userDao" class="com.epam.cdp.spring.dao.impl.UserDaoImpl">
+        <property name="userStorage" ref="userStorage"/>
+    </bean>
 
+    <!--Services beans-->
+    <bean id="eventService" class="com.epam.cdp.spring.service.impl.EventServiceImpl">
+        <property name="eventDao" ref="eventDao"/>
+    </bean>
+    <bean id="ticketService" class="com.epam.cdp.spring.service.impl.TicketServiceImpl">
+        <property name="ticketDao" ref="ticketDao"/>
+    </bean>
+    <bean id="userService" class="com.epam.cdp.spring.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="emailValidator" ref="emailValidator"/>
+    </bean>
+
+    <!--Facades-->
     <bean id="bookingFacade" class="com.epam.cdp.spring.facade.impl.BookingFacadeImpl">
         <constructor-arg ref="eventService"/>
         <constructor-arg ref="ticketService"/>
         <constructor-arg ref="userService"/>
     </bean>
 
+    <!--storage-->
     <util:map id="eventStorage" map-class="java.util.HashMap">
     </util:map>
 
@@ -29,12 +48,5 @@
 
     <util:map id="userStorage" map-class="java.util.HashMap">
     </util:map>
-
-    <!--TODO Setter injection example-->
-    <!-- <bean id="bookingFacade" class="com.epam.cdp.spring.facade.impl.BookingFacadeImpl">
-        <property name="eventService" ref="eventService"/>
-        <property name="ticketService" ref="ticketService"/>
-        <property name="userService" ref="userService"/>
-    </bean>-->
 
 </beans>

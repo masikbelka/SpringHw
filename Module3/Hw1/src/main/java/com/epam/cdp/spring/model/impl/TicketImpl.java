@@ -10,6 +10,14 @@ public class TicketImpl implements Ticket{
     private Ticket.Category category;
     private int place;
 
+    public TicketImpl(long id, long eventId, long userId, Category category, int place) {
+        this.id = id;
+        this.eventId = eventId;
+        this.userId = userId;
+        this.category = category;
+        this.place = place;
+    }
+
     public long getId() {
         return id;
     }

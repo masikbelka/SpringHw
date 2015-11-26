@@ -17,4 +17,7 @@ public interface EventService {
     Event updateEvent(Event event);
 
     boolean deleteEvent(long eventId);
+
+    boolean isEventExist(long eventId);
+
 }

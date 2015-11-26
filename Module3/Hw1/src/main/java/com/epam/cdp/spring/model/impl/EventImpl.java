@@ -10,6 +10,12 @@ public class EventImpl implements Event {
     private String title;
     private Date date;
 
+    public EventImpl(long id, String title, Date date) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+    }
+
     public long getId() {
         return id;
     }
