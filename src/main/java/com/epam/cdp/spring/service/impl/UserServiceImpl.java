@@ -1,0 +1,103 @@
+package com.epam.cdp.spring.service.impl;
+
+import com.epam.cdp.spring.dao.UserDao;
+import com.epam.cdp.spring.exceptions.StorageModelException;
+import com.epam.cdp.spring.model.User;
+import com.epam.cdp.spring.service.EmailValidator;
+import com.epam.cdp.spring.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Required;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserServiceImpl implements UserService {
+
+    private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
+
+    private UserDao userDao;
+    private EmailValidator emailValidator;
+
+    public User getUserById(long id) {
+        User user = null;
+
+        if (id > 0) {
+            user = userDao.getUserById(id);
+        } else {
+            LOG.warn("You provide wrong id. Id must be more than zero");
+        }
+
+        return user;
+    }
+
+    public User getUserByEmail(String email) {
+        User user = null;
+
+        if (!email.isEmpty() && emailValidator.validate(email)) {
+            user = userDao.getUserByEmail(email);
+        } else {
+            LOG.warn("You provide wrong id. Id must be more than zero");
+        }
+
+        return user;
+    }
+
+    public List<User> getUsersByName(String name, int pageSize, int pageNum) {
+        List<User> users = new ArrayList<>();
+
+        if (name != null && pageSize > 0 && pageNum > 0) {
+            users = userDao.getUsersByName(name, pageSize, pageNum);
+        } else {
+            LOG.warn("You provide wrong params to method.");
+        }
+
+        return users;
+    }
+
+    public User createUser(User user) throws StorageModelException {
+        User createdUser = null;
+
+        if (user != null && emailValidator.validate(user.getEmail())) {
+            createdUser = userDao.create(user);
+        } else {
+            String message = "Can't create user. It can't be null or with invalid email";
+            LOG.warn(message);
+            throw new StorageModelException(message);
+        }
+
+        return createdUser;
+    }
+
+    public User updateUser(User user) {
+        User updatedUser = null;
+
+        if (user != null && user.getId() >= 0 && emailValidator.validate(user.getEmail())) {
+            updatedUser = userDao.update(user);
+        }
+        return updatedUser;
+    }
+
+    public boolean deleteUser(long userId) {
+        boolean isDeleted = false;
+        if (userId >= 0) {
+            isDeleted = userDao.delete(userId);
+        }
+        return isDeleted;
+    }
+
+    @Override
+    public boolean isUserExist(long userId) {
+        return getUserById(userId) != null;
+    }
+
+    @Required
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Required
+    public void setEmailValidator(EmailValidator emailValidator) {
+        this.emailValidator = emailValidator;
+    }
+}
