@@ -1,7 +1,6 @@
 package com.epam.cdp.spring.service.impl;
 
 import com.epam.cdp.spring.dao.UserDao;
-import com.epam.cdp.spring.exceptions.StorageModelException;
 import com.epam.cdp.spring.model.User;
 import com.epam.cdp.spring.service.EmailValidator;
 import com.epam.cdp.spring.service.UserService;
@@ -55,15 +54,13 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-    public User createUser(User user) throws StorageModelException {
+    public User createUser(User user) {
         User createdUser = null;
 
         if (user != null && emailValidator.validate(user.getEmail())) {
             createdUser = userDao.create(user);
         } else {
-            String message = "Can't create user. It can't be null or with invalid email";
-            LOG.warn(message);
-            throw new StorageModelException(message);
+            LOG.warn("Can't create user. It can't be null or with invalid email");
         }
 
         return createdUser;
@@ -72,7 +69,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user) {
         User updatedUser = null;
 
-        if (user != null && user.getId() >= 0 && emailValidator.validate(user.getEmail())) {
+        if (user != null && user.getId() > 0 && emailValidator.validate(user.getEmail())) {
             updatedUser = userDao.update(user);
         }
         return updatedUser;
@@ -80,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
     public boolean deleteUser(long userId) {
         boolean isDeleted = false;
-        if (userId >= 0) {
+        if (userId > 0) {
             isDeleted = userDao.delete(userId);
         }
         return isDeleted;

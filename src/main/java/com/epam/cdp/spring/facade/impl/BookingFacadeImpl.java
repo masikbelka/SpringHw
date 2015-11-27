@@ -64,13 +64,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     public User createUser(User user) {
-        User resultUser = null;
-        try {
-            resultUser = userService.createUser(user);
-        } catch (StorageModelException e) {
-            LOG.warn("User can't to be created, because: " + e.getMessage());
-        }
-        return resultUser;
+       return userService.createUser(user);
     }
 
     public User updateUser(User user) {
