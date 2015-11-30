@@ -16,7 +16,7 @@ public class TicketDaoImpl implements TicketDao {
     private long lastId;
 
     @Resource
-    private Map<String, Ticket> ticketStorage;
+    private Map<Long, Ticket> ticketStorage;
 
     public TicketDaoImpl() {
         this.lastId = 1;
@@ -31,7 +31,7 @@ public class TicketDaoImpl implements TicketDao {
     public Ticket create(long userId, long eventId, int place, Ticket.Category category) {
         long id = lastId++;
         Ticket puttedTicket = new TicketImpl(id, eventId, userId, category, place);
-        ticketStorage.put(String.valueOf(id), puttedTicket);
+        ticketStorage.put(id, puttedTicket);
         return puttedTicket;
     }
 
