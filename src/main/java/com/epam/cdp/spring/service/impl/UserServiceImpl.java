@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user) {
         User updatedUser = null;
 
-        if (user != null && user.getId() > 0 && emailValidator.validate(user.getEmail())) {
+        if (isUserValid(user)&& user.getId() > 0) {
             updatedUser = userDao.update(user);
         }
         return updatedUser;
@@ -96,5 +96,9 @@ public class UserServiceImpl implements UserService {
     @Required
     public void setEmailValidator(EmailValidator emailValidator) {
         this.emailValidator = emailValidator;
+    }
+
+    private boolean isUserValid(User user) {
+        return user != null && user.getName() != null && !user.getName().isEmpty() && emailValidator.validate(user.getEmail());
     }
 }
