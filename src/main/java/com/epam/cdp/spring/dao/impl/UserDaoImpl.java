@@ -3,8 +3,8 @@ package com.epam.cdp.spring.dao.impl;
 import com.epam.cdp.spring.dao.UserDao;
 import com.epam.cdp.spring.model.User;
 import com.epam.cdp.spring.model.impl.UserImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,12 +13,12 @@ public class UserDaoImpl implements UserDao {
 
     private long lastId;
 
+    @Resource
+    private Map<Long, User> userStorage;
+
     public UserDaoImpl() {
         this.lastId = 1;
     }
-
-    @Autowired
-    private Map<Long, User> userStorage;
 
     @Override
     public User create(User user) {

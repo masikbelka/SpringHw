@@ -5,8 +5,8 @@ import com.epam.cdp.spring.model.Event;
 import com.epam.cdp.spring.model.Ticket;
 import com.epam.cdp.spring.model.User;
 import com.epam.cdp.spring.model.impl.TicketImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,12 +15,12 @@ public class TicketDaoImpl implements TicketDao {
 
     private long lastId;
 
+    @Resource
+    private Map<String, Ticket> ticketStorage;
+
     public TicketDaoImpl() {
         this.lastId = 1;
     }
-
-    @Autowired
-    private Map<Long, Ticket> ticketStorage;
 
     @Override
     public boolean cancel(long ticketId) {
@@ -31,7 +31,7 @@ public class TicketDaoImpl implements TicketDao {
     public Ticket create(long userId, long eventId, int place, Ticket.Category category) {
         long id = lastId++;
         Ticket puttedTicket = new TicketImpl(id, eventId, userId, category, place);
-        ticketStorage.put(id, puttedTicket);
+        ticketStorage.put(String.valueOf(id), puttedTicket);
         return puttedTicket;
     }
 
