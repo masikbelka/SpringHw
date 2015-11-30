@@ -56,7 +56,7 @@ public class EventServiceImpl implements EventService{
     public Event createEvent(Event event) {
         Event createdEvent = null;
 
-        if (event != null) {
+        if (isEventValid(event)) {
             createdEvent = eventDao.create(event);
         }
 
@@ -88,6 +88,10 @@ public class EventServiceImpl implements EventService{
     @Required
     public void setEventDao(EventDao eventDao) {
         this.eventDao = eventDao;
+    }
+
+    private boolean isEventValid(Event event) {
+        return event!= null && event.getTitle()!= null && !event.getTitle().isEmpty() && event.getDate() != null;
     }
 
 }
