@@ -66,7 +66,7 @@ public class EventServiceImpl implements EventService{
     public Event updateEvent(Event event) {
         Event updatedEvent = null;
 
-        if (event != null && event.getId() >= 0) {
+        if (isEventValid(event) && event.getId() >= 0) {
             updatedEvent = eventDao.update(event);
         }
         return updatedEvent;
