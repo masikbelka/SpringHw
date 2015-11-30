@@ -7,6 +7,7 @@ import com.epam.cdp.spring.model.impl.UserImpl;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UserDaoImpl implements UserDao {
@@ -49,9 +50,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByEmail(String email) {
-        return userStorage.entrySet().stream()
-                .filter(entry -> entry.getValue().getName().equals(email))
-                .findFirst().get().getValue();
+        Optional<Map.Entry<Long, User>> result = userStorage.entrySet().stream()
+                .filter(entry -> entry.getValue().getEmail().equals(email))
+                .findFirst();
+        return result.isPresent() ? result.get().getValue() : null;
     }
 
     @Override

@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         User user = null;
 
-        if (!email.isEmpty() && emailValidator.validate(email)) {
+        if (emailValidator.validate(email)) {
             user = userDao.getUserByEmail(email);
         } else {
             LOG.warn("You provide wrong id. Id must be more than zero");
