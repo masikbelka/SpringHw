@@ -32,7 +32,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return eventService.getEventsByTitle( title, pageSize, pageNum);
+        return eventService.getEventsByTitle(title, pageSize, pageNum);
     }
 
     public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
@@ -64,7 +64,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     public User createUser(User user) {
-       return userService.createUser(user);
+        return userService.createUser(user);
     }
 
     public User updateUser(User user) {
@@ -78,11 +78,11 @@ public class BookingFacadeImpl implements BookingFacade {
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
         Ticket bookedTicket = null;
         if (isPossibleToBook(userId, eventId, category))
-        try {
-            bookedTicket = ticketService.bookTicket(userId, eventId, place, category);
-        } catch (StorageModelException e) {
-            LOG.warn("Ticket can't to be booked(created), because: " + e.getMessage());
-        }
+            try {
+                bookedTicket = ticketService.bookTicket(userId, eventId, place, category);
+            } catch (StorageModelException e) {
+                LOG.warn("Ticket can't to be booked(created), because: " + e.getMessage());
+            }
         return bookedTicket;
     }
 

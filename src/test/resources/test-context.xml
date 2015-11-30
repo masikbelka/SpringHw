@@ -30,7 +30,8 @@
 
 
     <!--DAO-->
-    <bean class="com.epam.cdp.spring.dao.impl.EventDaoImpl" id="eventDao"/>
+    <bean class="com.epam.cdp.spring.dao.impl.EventDaoImpl" id="eventDao" init-method="initLastId">
+            </bean>
     <bean class="com.epam.cdp.spring.dao.impl.TicketDaoImpl" id="ticketDao"/>
     <bean class="com.epam.cdp.spring.dao.impl.UserDaoImpl" id="userDao"/>
 
