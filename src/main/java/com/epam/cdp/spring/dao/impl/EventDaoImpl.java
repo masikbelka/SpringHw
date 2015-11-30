@@ -15,12 +15,14 @@ public class EventDaoImpl implements EventDao {
 
     private long lastId;
 
-    public EventDaoImpl() {
-        this.lastId = 1;
-    }
-
     @Resource
-    private Map<String, Event> eventStorage;
+    private Map<Long, Event> eventStorage;
+
+    private void initLastId(){
+        if(eventStorage != null && !eventStorage.isEmpty()){
+            this.lastId = eventStorage.size();
+        }
+    }
 
     @Override
     public Event getEventById(long id) {
@@ -58,16 +60,15 @@ public class EventDaoImpl implements EventDao {
 
     @Override
     public Event create(Event event) {
-        long id = lastId++;
+        long id = ++lastId;
         Event puttedEvent = new EventImpl(id, event.getTitle(), event.getDate());
-//        eventStorage.put(id, puttedEvent);
+        eventStorage.put(id, puttedEvent);
         return puttedEvent;
     }
 
-//    @Override
+    @Override
     public Event update(Event event) {
-        return null;
-//        return eventStorage.replace(event.getId(), event);
+        return eventStorage.replace(event.getId(), event);
     }
 
     @Override
