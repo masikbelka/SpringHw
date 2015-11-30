@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="java.text.SimpleDateFormat" id="dateFormat">
+        <constructor-arg value="dd/MM/yyyy"/>
+    </bean>
+
+    <!--Event-->
+    <bean class="com.epam.cdp.spring.model.impl.EventImpl" id="firstEvent">
+        <constructor-arg value="1"/>
+        <constructor-arg value="First Event"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="10/10/2015"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.EventImpl" id="secondEvent">
+        <constructor-arg value="2"/>
+        <constructor-arg value="Second Event"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="10/11/2015"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.EventImpl" id="thirdEvent">
+        <constructor-arg value="3"/>
+        <constructor-arg value="Third Event"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="1/10/2015"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.EventImpl" id="fourthEvent">
+        <constructor-arg value="4"/>
+        <constructor-arg value="Fourth Event"/>
+        <constructor-arg>
+            <bean factory-bean="dateFormat" factory-method="parse">
+                <constructor-arg value="10/12/2015"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <!--User-->
+    <bean class="com.epam.cdp.spring.model.impl.UserImpl" id="firstUser">
+        <constructor-arg value="1"/>
+        <constructor-arg value="First User" name="name"/>
+        <constructor-arg value="1user@mail.com" name="email"/>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.UserImpl" id="secondUser">
+        <constructor-arg value="2"/>
+        <constructor-arg value="Second User" name="name"/>
+        <constructor-arg value="2user@mail.com" name="email"/>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.UserImpl" id="thirdUser">
+        <constructor-arg value="3"/>
+        <constructor-arg value="Third User" name="name"/>
+        <constructor-arg value="3user@mail.com" name="email"/>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.UserImpl" id="fourthUser">
+        <constructor-arg value="4"/>
+        <constructor-arg value="Fourth User" name="name"/>
+        <constructor-arg value="4user@mail.com" name="email"/>
+    </bean>
+
+    <!--Ticket-->
+    <bean class="com.epam.cdp.spring.model.impl.TicketImpl" id="firstTicket">
+        <constructor-arg value="1" name="id"/>
+        <constructor-arg value="1" name="eventId"/>
+        <constructor-arg value="1" name="userId"/>
+        <constructor-arg value="BAR" />
+        <constructor-arg value="1" name="place"/>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.TicketImpl" id="secondTicket">
+        <constructor-arg value="2" name="id"/>
+        <constructor-arg value="2" name="eventId"/>
+        <constructor-arg value="2" name="userId"/>
+        <constructor-arg value="PREMIUM" />
+        <constructor-arg value="2" name="place"/>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.TicketImpl" id="thirdTicket">
+        <constructor-arg value="3" name="id"/>
+        <constructor-arg value="3" name="eventId"/>
+        <constructor-arg value="3" name="userId"/>
+        <constructor-arg value="STANDARD" />
+        <constructor-arg value="3" name="place"/>
+    </bean>
+    <bean class="com.epam.cdp.spring.model.impl.TicketImpl" id="fourthTicket">
+        <constructor-arg value="4" name="id"/>
+        <constructor-arg value="4" name="eventId"/>
+        <constructor-arg value="4" name="userId"/>
+        <constructor-arg value="BAR" />
+        <constructor-arg value="4" name="place"/>
+    </bean>
+</beans>
