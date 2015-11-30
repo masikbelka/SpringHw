@@ -77,7 +77,6 @@ public class BookingFacadeTest {
     public void testGetPartiallyFilledEventsPageByTitle() throws Exception {
         List<Event> events = bookingFacade.getEventsByTitle(EVENT, 3, 2);
         assertEquals(1, events.size());
-
     }
 
     @Test
@@ -100,6 +99,7 @@ public class BookingFacadeTest {
         Event event = new EventImpl("Test Event", testDate);
         Event createdEvent = bookingFacade.createEvent(event);
         assertNotEquals(0, createdEvent.getId());
+        bookingFacade.deleteEvent(createdEvent.getId());
     }
 
     @Test
@@ -120,8 +120,8 @@ public class BookingFacadeTest {
     @Test
     public void testUpdateEvent() throws Exception {
         Date testDate = simpleDateFormat.parse(TEST_EVENT_DATE);
-        Event event = new EventImpl(SECOND_ID, TEST_EVENT_TITLE, testDate);
-        Event previousEvent = bookingFacade.getEventById(SECOND_ID);
+        Event event = new EventImpl(THIRD_ID, TEST_EVENT_TITLE, testDate);
+        Event previousEvent = bookingFacade.getEventById(THIRD_ID);
         Event updatedEvent = bookingFacade.updateEvent(event);
         assertEquals(previousEvent, updatedEvent);
     }
@@ -148,7 +148,9 @@ public class BookingFacadeTest {
 
     @Test
     public void testDeleteEvent() throws Exception {
-        assertTrue(bookingFacade.deleteEvent(SECOND_ID));
+        Event event = bookingFacade.getEventById(FOURTH_ID);
+        assertTrue(bookingFacade.deleteEvent(FOURTH_ID));
+        bookingFacade.createEvent(event);
     }
 
     @Test
@@ -261,7 +263,7 @@ public class BookingFacadeTest {
 
     @Test
     public void testBookTicket() throws Exception {
-        assertNotNull(bookingFacade.bookTicket(FOURTH_ID, FOURTH_ID, 1, Ticket.Category.PREMIUM));
+        assertNotNull(bookingFacade.bookTicket(FOURTH_ID, SECOND_ID, 1, Ticket.Category.PREMIUM));
     }
 
 
