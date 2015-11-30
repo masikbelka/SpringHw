@@ -72,28 +72,28 @@
         <constructor-arg value="1" name="id"/>
         <constructor-arg value="1" name="eventId"/>
         <constructor-arg value="1" name="userId"/>
-        <constructor-arg value="BAR" />
+        <constructor-arg value="BAR"/>
         <constructor-arg value="1" name="place"/>
     </bean>
     <bean class="com.epam.cdp.spring.model.impl.TicketImpl" id="secondTicket">
         <constructor-arg value="2" name="id"/>
         <constructor-arg value="2" name="eventId"/>
         <constructor-arg value="2" name="userId"/>
-        <constructor-arg value="PREMIUM" />
+        <constructor-arg value="PREMIUM"/>
         <constructor-arg value="2" name="place"/>
     </bean>
     <bean class="com.epam.cdp.spring.model.impl.TicketImpl" id="thirdTicket">
         <constructor-arg value="3" name="id"/>
         <constructor-arg value="3" name="eventId"/>
         <constructor-arg value="3" name="userId"/>
-        <constructor-arg value="STANDARD" />
+        <constructor-arg value="STANDARD"/>
         <constructor-arg value="3" name="place"/>
     </bean>
     <bean class="com.epam.cdp.spring.model.impl.TicketImpl" id="fourthTicket">
         <constructor-arg value="4" name="id"/>
         <constructor-arg value="4" name="eventId"/>
         <constructor-arg value="4" name="userId"/>
-        <constructor-arg value="BAR" />
+        <constructor-arg value="BAR"/>
         <constructor-arg value="4" name="place"/>
     </bean>
 </beans>
