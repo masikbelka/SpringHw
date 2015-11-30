@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         User createdUser = null;
 
-        if (user != null && emailValidator.validate(user.getEmail())) {
+        if (isUserValid(user)) {
             createdUser = userDao.create(user);
         } else {
             LOG.warn("Can't create user. It can't be null or with invalid email");
