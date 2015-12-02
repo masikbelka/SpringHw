@@ -47,7 +47,6 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public List<Ticket> getBookedTicketsByEvent(long eventId) {
-
         return ticketStorage.entrySet().stream()
                 .filter(entry -> entry.getValue().getEventId() == eventId)
                 .map(Map.Entry::getValue).collect(Collectors.toList());
@@ -56,7 +55,7 @@ public class TicketDaoImpl implements TicketDao {
     @Override
     public List<Ticket> getBookedTicketsByUser(long userId) {
         return ticketStorage.entrySet().stream()
-                .filter(entry -> entry.getValue().getEventId() == userId)
+                .filter(entry -> entry.getValue().getUserId() == userId)
                 .map(Map.Entry::getValue).collect(Collectors.toList());
     }
 

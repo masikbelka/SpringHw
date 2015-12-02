@@ -266,5 +266,40 @@ public class BookingFacadeTest {
         assertNotNull(bookingFacade.bookTicket(FOURTH_ID, SECOND_ID, 1, Ticket.Category.PREMIUM));
     }
 
+    @Test
+    public void testBookTicketWithInvalidUserId() throws Exception {
+        assertNull(bookingFacade.bookTicket(INVALID_ID, SECOND_ID, 2, Ticket.Category.PREMIUM));
+    }
 
+    @Test
+    public void testBookTicketWithInvalidEventId() throws Exception {
+        assertNull(bookingFacade.bookTicket(FOURTH_ID, INVALID_ID, 2, Ticket.Category.PREMIUM));
+    }
+
+    @Test
+    public void testBookTicketWithNullCategory() throws Exception {
+        assertNull(bookingFacade.bookTicket(FOURTH_ID, SECOND_ID, 2, null));
+    }
+
+    @Test
+    public void testBookBookedTicket() throws Exception {
+        assertNull(bookingFacade.bookTicket(FOURTH_ID, FIRST_ID, 1, Ticket.Category.BAR));
+    }
+
+    @Test
+    public void testGetBookedTickets() throws Exception {
+        User user = bookingFacade.getUserById(FIRST_ID);
+        List<Ticket> tickets = bookingFacade.getBookedTickets(user, 4, 1);
+        assertNotEquals(0, tickets);
+        for (Ticket ticket : tickets) {
+            assertEquals(user.getId(), ticket.getUserId());
+        }
+    }
+
+    @Test
+    public void testGetBookedTicketWithNullUser() throws Exception {
+        User user = null;
+        List<Ticket> tickets = bookingFacade.getBookedTickets(user, 4, 1);
+        assertEquals(0, tickets.size());
+    }
 }
