@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd ">
+    <import resource="entity.xml"/>
+
+    <!--Event-->
+    <p:map id="eventStorage" key-type="long" value-type="com.epam.cdp.spring.model.Event">
+        <entry key="1" value-ref="firstEvent"/>
+        <entry key="2" value-ref="secondEvent"/>
+        <entry key="3" value-ref="thirdEvent"/>
+        <entry key="4" value-ref="fourthEvent"/>
+    </p:map>
+
+    <!--Ticket-->
+    <p:map id="ticketStorage" key-type="long" value-type="com.epam.cdp.spring.model.Ticket">
+        <entry key="1" value-ref="firstTicket"/>
+        <entry key="2" value-ref="secondTicket"/>
+        <entry key="3" value-ref="thirdTicket"/>
+        <entry key="4" value-ref="fourthTicket"/>
+    </p:map>
+
+    <!--User-->
+    <p:map id="userStorage" key-type="long" value-type="com.epam.cdp.spring.model.User">
+        <entry key="1" value-ref="firstUser"/>
+        <entry key="2" value-ref="secondUser"/>
+        <entry key="3" value-ref="thirdUser"/>
+        <entry key="4" value-ref="fourthUser"/>
+    </p:map>
+</beans>
