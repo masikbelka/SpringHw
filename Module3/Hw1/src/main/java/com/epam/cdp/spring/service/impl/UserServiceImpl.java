@@ -1,7 +1,6 @@
 package com.epam.cdp.spring.service.impl;
 
 import com.epam.cdp.spring.dao.UserDao;
-import com.epam.cdp.spring.exceptions.StorageModelException;
 import com.epam.cdp.spring.model.User;
 import com.epam.cdp.spring.service.EmailValidator;
 import com.epam.cdp.spring.service.UserService;
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         User user = null;
 
-        if (!email.isEmpty() && emailValidator.validate(email)) {
+        if (emailValidator.validate(email)) {
             user = userDao.getUserByEmail(email);
         } else {
             LOG.warn("You provide wrong id. Id must be more than zero");
@@ -55,15 +54,13 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
-    public User createUser(User user) throws StorageModelException {
+    public User createUser(User user) {
         User createdUser = null;
 
-        if (user != null && emailValidator.validate(user.getEmail())) {
+        if (isUserValid(user)) {
             createdUser = userDao.create(user);
         } else {
-            String message = "Can't create user. It can't be null or with invalid email";
-            LOG.warn(message);
-            throw new StorageModelException(message);
+            LOG.warn("Can't create user. It can't be null or with invalid email");
         }
 
         return createdUser;
@@ -72,7 +69,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user) {
         User updatedUser = null;
 
-        if (user != null && user.getId() >= 0 && emailValidator.validate(user.getEmail())) {
+        if (isUserValid(user)&& user.getId() > 0) {
             updatedUser = userDao.update(user);
         }
         return updatedUser;
@@ -80,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
     public boolean deleteUser(long userId) {
         boolean isDeleted = false;
-        if (userId >= 0) {
+        if (userId > 0) {
             isDeleted = userDao.delete(userId);
         }
         return isDeleted;
@@ -99,5 +96,9 @@ public class UserServiceImpl implements UserService {
     @Required
     public void setEmailValidator(EmailValidator emailValidator) {
         this.emailValidator = emailValidator;
+    }
+
+    private boolean isUserValid(User user) {
+        return user != null && user.getName() != null && !user.getName().isEmpty() && emailValidator.validate(user.getEmail());
     }
 }

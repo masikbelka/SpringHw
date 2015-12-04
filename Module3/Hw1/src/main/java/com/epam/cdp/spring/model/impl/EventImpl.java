@@ -16,6 +16,11 @@ public class EventImpl implements Event {
         this.date = date;
     }
 
+    public EventImpl(String title, Date date) {
+        this.title = title;
+        this.date = date;
+    }
+
     public long getId() {
         return id;
     }
