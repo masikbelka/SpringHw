@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <import resource="storage.xml"/>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.epam.cdp.spring"/>
+
+    <!--Facade-->
+    <bean class="com.epam.cdp.spring.facade.impl.BookingFacadeImpl" id="bookingFacade">
+        <constructor-arg ref="eventService"/>
+        <constructor-arg ref="ticketService"/>
+        <constructor-arg ref="userService"/>
+    </bean>
+
+    <!--Service-->
+    <bean class="com.epam.cdp.spring.service.impl.EventServiceImpl" id="eventService">
+        <property name="eventDao" ref="eventDao"/>
+    </bean>
+    <bean class="com.epam.cdp.spring.service.impl.TicketServiceImpl" id="ticketService">
+        <property name="ticketDao" ref="ticketDao"/>
+    </bean>
+    <bean class="com.epam.cdp.spring.service.impl.UserServiceImpl" id="userService">
+        <property name="emailValidator">
+            <bean class="com.epam.cdp.spring.service.EmailValidator"/>
+        </property>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+
+    <!--DAO-->
+    <bean class="com.epam.cdp.spring.dao.impl.EventDaoImpl" id="eventDao" init-method="initLastId">
+            </bean>
+    <bean class="com.epam.cdp.spring.dao.impl.TicketDaoImpl" id="ticketDao"/>
+    <bean class="com.epam.cdp.spring.dao.impl.UserDaoImpl" id="userDao"/>
+
+
+</beans>
