@@ -130,14 +130,16 @@ public class BookingFacadeImpl implements BookingFacade {
     @Override
     public boolean addFunds(long userAccountId, double funds) throws BookingFacadeException {
         validateFunds(funds);
+        boolean isSuccessful = false;
         UserAccount userAccount = userAccountService.getUserAccountById(userAccountId);
         if (userAccount != null) {
             userAccount.setPrepaidMoney(userAccount.getPrepaidMoney() + funds);
             if (!userAccountService.update(userAccount)) {
                 throw new BookingFacadeException("Rollback Transaction... Unable to add funds to user account");
             }
+            isSuccessful = true;
         }
-        return true;
+        return isSuccessful;
     }
 
     @Transactional

@@ -1,9 +1,7 @@
 package com.epam.cdp.spring.facade;
 
-import com.epam.cdp.spring.model.Event;
-import com.epam.cdp.spring.model.Ticket;
-import com.epam.cdp.spring.model.TicketCategory;
-import com.epam.cdp.spring.model.User;
+import com.epam.cdp.spring.exception.BookingFacadeException;
+import com.epam.cdp.spring.model.*;
 import com.epam.cdp.spring.model.impl.EventImpl;
 import com.epam.cdp.spring.model.impl.UserImpl;
 import org.junit.Before;
@@ -352,5 +350,54 @@ public class BookingFacadeTest {
         User user = null;
         List<Ticket> tickets = bookingFacade.getBookedTickets(user, 4, 1);
         assertEquals(0, tickets.size());
+    }
+
+    @Test
+    @Rollback(true)
+    public void testWithdrawFunds() throws Exception {
+        UserAccount userAccount = bookingFacade.getUserAccountById(1);
+        bookingFacade.withdrawFunds(userAccount.getUserAccountId(), 1);
+        UserAccount updatedUserAccount = bookingFacade.getUserAccountById(1);
+        assertEquals(userAccount.getPrepaidMoney() - 1, updatedUserAccount.getPrepaidMoney(), 1);
+    }
+
+    @Test(expected = BookingFacadeException.class)
+    @Rollback(true)
+    public void testWithdrawInvalidFunds() throws Exception {
+        bookingFacade.withdrawFunds(1, -1);
+    }
+
+    @Test(expected = BookingFacadeException.class)
+    @Rollback(true)
+    public void testWithdrawMoreFundsThatAvailable() throws Exception {
+        bookingFacade.withdrawFunds(1, Double.MAX_VALUE);
+    }
+
+    @Test
+    @Rollback(true)
+    public void testAddFunds() throws Exception {
+        UserAccount userAccount = bookingFacade.getUserAccountById(1);
+        bookingFacade.addFunds(userAccount.getUserAccountId(), 1);
+        UserAccount updatedUserAccount = bookingFacade.getUserAccountById(1);
+        assertEquals(userAccount.getPrepaidMoney() + 1, updatedUserAccount.getPrepaidMoney(), 1);
+    }
+
+    @Test(expected = BookingFacadeException.class)
+    @Rollback(true)
+    public void testAddInvalidFunds() throws Exception {
+        bookingFacade.addFunds(1, -1);
+    }
+
+    @Test
+    @Rollback(true)
+    public void testAddFundsWhenAccountNoxExist() throws Exception {
+        assertFalse(bookingFacade.addFunds(10, 1));
+    }
+
+    @Test
+    @Rollback(true)
+    public void testWithdrawFundsWhenAccountNotExist() throws Exception {
+        assertFalse(bookingFacade.withdrawFunds(10, 1));
+
     }
 }
