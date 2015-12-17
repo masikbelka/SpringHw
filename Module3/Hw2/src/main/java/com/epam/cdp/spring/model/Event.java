@@ -1,6 +1,6 @@
 package com.epam.cdp.spring.model;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by maksym_govorischev.
@@ -14,8 +14,8 @@ public interface Event {
     void setId(long id);
     String getTitle();
     void setTitle(String title);
-    Date getDate();
-    void setDate(Date date);
+    Calendar getDate();
+    void setDate(Calendar date);
 
     double getTicketPrice();
 

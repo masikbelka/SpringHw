@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class EventServiceTest {
     private long validEventId = 1;
     private long invalidEventId = 0;
     private String validEventTitle = "valid";
-    private Date validEventDate = new Date();
+    private Calendar validEventDate = Calendar.getInstance();
     private List<Event> eventDaoList;
 
 

@@ -2,23 +2,23 @@ package com.epam.cdp.spring.model.impl;
 
 import com.epam.cdp.spring.model.Event;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class EventImpl implements Event {
 
     private long id;
     private String title;
-    private Date date;
+    private Calendar date;
     private double ticketPrice;
 
-    public EventImpl(long id, String title, Date date, double ticketPrice) {
+    public EventImpl(long id, String title, Calendar date, double ticketPrice) {
         this.id = id;
         this.title = title;
         this.date = date;
         this.ticketPrice = ticketPrice;
     }
 
-    public EventImpl(String title, Date date, double ticketPrice) {
+    public EventImpl(String title, Calendar date, double ticketPrice) {
         this.title = title;
         this.date = date;
         this.ticketPrice = ticketPrice;
@@ -48,12 +48,12 @@ public class EventImpl implements Event {
     }
 
     @Override
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
     @Override
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
@@ -74,5 +74,31 @@ public class EventImpl implements Event {
                 ", title='" + title + '\'' +
                 ", date=" + date +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EventImpl event = (EventImpl) o;
+
+        if (getId() != event.getId()) return false;
+        if (Double.compare(event.getTicketPrice(), getTicketPrice()) != 0) return false;
+        if (!getTitle().equals(event.getTitle())) return false;
+        return getDate().equals(event.getDate());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getTitle().hashCode();
+        result = 31 * result + getDate().hashCode();
+        temp = Double.doubleToLongBits(getTicketPrice());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

@@ -67,8 +67,8 @@ public class ExtendedJDBCTemplate extends JdbcTemplate implements ExtendedJDBCOp
     }
 
     @Override
-    public <T> int update(String sql, UpdateQueryMapper<T> mapper, T entity) {
-        return super.update(sql, mapper, entity);
+    public <T> int updateEntity(String sql, UpdateQueryMapper<T> mapper, T entity) {
+        return super.update(sql, mapper.mapUpdateQuery(entity));
     }
 
     @Override

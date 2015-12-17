@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -41,7 +41,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
+    public List<Event> getEventsForDay(Calendar day, int pageSize, int pageNum) {
         return eventService.getEventsForDay(day, pageSize, pageNum);
     }
 
@@ -80,7 +80,7 @@ public class BookingFacadeImpl implements BookingFacade {
     public User createUser(User user) throws BookingFacadeException {
         User createdUser = userService.createUser(user);
         if (createdUser != null) {
-            UserAccount userAccount = userAccountService.create(getEmptyUserAccountFromUser(user));
+            UserAccount userAccount = userAccountService.create(getEmptyUserAccountFromUser(createdUser));
             if (userAccount == null) {
                 throw new BookingFacadeException("Rollback Transaction... Unable to create User Account for user " + String.valueOf(user));
             }
@@ -98,10 +98,10 @@ public class BookingFacadeImpl implements BookingFacade {
     @Override
     public boolean deleteUser(long userId) throws BookingFacadeException {
         boolean isSuccessfullyDeleted = false;
-        if (userService.deleteUser(userId)) {
-            isSuccessfullyDeleted = userAccountService.deleteByUser(userId);
+        if (userAccountService.deleteByUser(userId)) {
+            isSuccessfullyDeleted = userService.deleteUser(userId);
             if (!isSuccessfullyDeleted) {
-                throw new BookingFacadeException("Rollback Transaction... Unable to remove User Account for user with ID " + userId);
+                throw new BookingFacadeException("Rollback Transaction... Unable to remove user with ID " + userId);
             }
         }
         return isSuccessfullyDeleted;

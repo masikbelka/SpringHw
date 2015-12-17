@@ -14,13 +14,13 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    public static final String CREATE = "INSERT INTO [user] (name, email) VALUES (?, ?)";
-    public static final String UPDATE = "UPDATE [user] SET name = ?, email = ?";
-    public static final String DELETE = "DELETE FROM [user] WHERE user_id = ?";
-    public static final String GET_USERS_BY_NAME = "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY user_id) AS RowNum, * FROM [user] WHERE name = ?) "
+    public static final String CREATE = "INSERT INTO [spring].[dbo].[user] ([user_name], [user_email]) VALUES (?, ?)";
+    public static final String UPDATE = "UPDATE [spring].[dbo].[user] SET [spring].[dbo].[user].user_name = ?, [spring].[dbo].[user].[user_email] = ? WHERE user_id = ?";
+    public static final String DELETE = "DELETE FROM [spring].[dbo].[user] WHERE user_id = ?";
+    public static final String GET_USERS_BY_NAME = "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY user_id) AS RowNum, * FROM [spring].[dbo].[user] WHERE [spring].[dbo].[user].[user_name] = ?) "
             + "AS RowConstrainedResult WHERE RowNum > ? AND RowNum <= ?";
-    public static final String GET_USER_BY_EMAIL = "SELECT * FROM [user] WHERE email = ?";
-    public static final String GET_USER_BY_ID = "SELECT * FROM [user] WHERE user_id = ?";
+    public static final String GET_USER_BY_EMAIL = "SELECT * FROM [spring].[dbo].[user] WHERE [spring].[dbo].[user].[user_email] = ?";
+    public static final String GET_USER_BY_ID = "SELECT * FROM [spring].[dbo].[user] WHERE user_id = ?";
 
     @Autowired
     private ExtendedJDBCTemplate extendedJDBCTemplate;
@@ -48,12 +48,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        return extendedJDBCTemplate.update(UPDATE, userMapper, user) > 0 ? user : null;
+        return extendedJDBCTemplate.updateEntity(UPDATE, userMapper, user) > 0 ? user : null;
     }
 
     @Override
-    public boolean delete(long userId) {
-        return extendedJDBCTemplate.queryForObject(DELETE, Integer.class, userId) > 0;
+    public boolean delete(Long userId) {
+        return extendedJDBCTemplate.update(DELETE, userId) > 0;
     }
 
     @Override

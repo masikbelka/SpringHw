@@ -29,6 +29,6 @@ public interface ExtendedJDBCOperations extends JdbcOperations {
 
     <T> void batchUpdate(String sql, InsertQueryMapper<T> mapper, List<T> entities);
 
-    <T> int update(String sql, UpdateQueryMapper<T> mapper, T entity);
+    <T> int updateEntity(String sql, UpdateQueryMapper<T> mapper, T entity);
 }
 

@@ -27,8 +27,8 @@ public class UserAccountMapper implements InsertQueryMapper<UserAccount>, RowMap
         UserAccount userAccount = new UserAccountImpl();
         userAccount.setUserAccountId(resultSet.getLong("user_account_id"));
         userAccount.setUserId(resultSet.getLong("user_id"));
-        userAccount.setPrepaidMoney(resultSet.getDouble("prepaid_money"));
-        return null;
+        userAccount.setPrepaidMoney(resultSet.getDouble("user_account_funds"));
+        return userAccount;
     }
 
     @Override

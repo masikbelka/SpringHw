@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -34,7 +34,7 @@ public class TicketServiceTest {
     private Event validEvent;
     private Event invalidEvent;
     private String validEventTitle = "valid";
-    private Date validEventDate = new Date();
+    private Calendar validEventDate = Calendar.getInstance();
     private long validTicketId = 1;
     private long invalidTicketId = 0;
     private long validUserId = 1;

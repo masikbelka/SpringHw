@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -35,26 +35,23 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
         List<Event> events = new ArrayList<>();
-
-        if (title != null) {
-            events = eventDao.getEventsByTitle(title, pageSize, pageNum);
+        if (title != null && isPageSizeAndPageNumValid(pageSize, pageNum)) {
+            String formattedTitle = "%" + title.trim() + "%";
+            events = eventDao.getEventsByTitle(formattedTitle, getStartRow(pageSize, pageNum), getLastRow(pageSize, pageNum));
         } else {
             LOGGER.error("Title can not be null!");
         }
-
         return events;
     }
 
     @Override
-    public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
+    public List<Event> getEventsForDay(Calendar day, int pageSize, int pageNum) {
         List<Event> events = new ArrayList<>();
-
-        if (day != null) {
-            events = eventDao.getEventsByDay(day, pageSize, pageNum);
+        if (day != null && isPageSizeAndPageNumValid(pageSize, pageNum)) {
+            events = eventDao.getEventsByDay(day, getStartRow(pageSize, pageNum), getLastRow(pageSize, pageNum));
         } else {
             LOGGER.error("Day can not be null!");
         }
-
         return events;
     }
 
@@ -88,7 +85,7 @@ public class EventServiceImpl implements EventService {
         boolean isDeleted = false;
         if (eventId > 0) {
             isDeleted = eventDao.delete(eventId);
-        }else {
+        } else {
             LOGGER.error("Invalid event id " + eventId);
         }
         return isDeleted;
@@ -101,6 +98,23 @@ public class EventServiceImpl implements EventService {
 
     private boolean isEventValid(Event event) {
         return event != null && event.getTitle() != null && !event.getTitle().isEmpty() && event.getDate() != null;
+    }
+
+    private int getStartRow(int pageSize, int pageNum) {
+        return pageSize * (pageNum - 1);
+    }
+
+    private int getLastRow(int pageSize, int pageNum) {
+        return pageSize * pageNum;
+    }
+
+    private boolean isPageSizeAndPageNumValid(int pageSize, int pageNum) {
+        boolean isValid = true;
+        if (pageSize < 1 || pageNum < 1) {
+            LOGGER.error(String.format("Invalid parameters {pageSize:%d} {pageNum:%d}", pageSize, pageNum));
+            isValid = false;
+        }
+        return isValid;
     }
 
 }

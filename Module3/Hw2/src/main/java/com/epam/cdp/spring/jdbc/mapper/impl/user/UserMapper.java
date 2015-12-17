@@ -1,6 +1,7 @@
 package com.epam.cdp.spring.jdbc.mapper.impl.user;
 
 import com.epam.cdp.spring.jdbc.mapper.InsertQueryMapper;
+import com.epam.cdp.spring.jdbc.mapper.UpdateQueryMapper;
 import com.epam.cdp.spring.model.User;
 import com.epam.cdp.spring.model.impl.UserImpl;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
  * Created by Yurii Chukhlatyi
  */
 @Component
-public class UserMapper implements InsertQueryMapper<User>, RowMapper<User> {
+public class UserMapper implements InsertQueryMapper<User>, RowMapper<User>, UpdateQueryMapper<User> {
     @Override
     public void mapQuery(User entity, PreparedStatement statement) throws SQLException {
         statement.setString(1, entity.getName());
@@ -32,5 +33,14 @@ public class UserMapper implements InsertQueryMapper<User>, RowMapper<User> {
         user.setName(rs.getString("user_name"));
         user.setEmail(rs.getString("user_email"));
         return user;
+    }
+
+    @Override
+    public Object[] mapUpdateQuery(User entity) {
+        Object[] args = new Object[3];
+        args[0] = entity.getName();
+        args[1] = entity.getEmail();
+        args[2] = entity.getId();
+        return args;
     }
 }

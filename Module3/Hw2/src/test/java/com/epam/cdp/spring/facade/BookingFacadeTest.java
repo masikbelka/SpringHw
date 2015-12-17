@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -33,12 +33,12 @@ public class BookingFacadeTest {
     public static final int THIRD_ID = 3;
     public static final int FOURTH_ID = 4;
     public static final String EVENT = "Event";
-    public static final String SECOND_EVENT_DATE = "10/11/2015";
-    public static final String TEST_EVENT_DATE = "1/1/2016";
+    public static final String SECOND_EVENT_DATE = "2015-06-01";
+    public static final String TEST_EVENT_DATE = "2015-01-01";
     public static final String CHANGED_TITLE = "CHANGED";
     public static final String TEST_EVENT_TITLE = "Test Event";
     public static final int INVALID_EVENT_ID = 100;
-    public static final String SECOND_USER_EMAIL = "2user@mail.com";
+    public static final String SECOND_USER_EMAIL = "second@mail.com";
     public static final String TEST_USER_NAME = "Test User";
     public static final String TEST_USER_EMAIL = "testUser@mail.com";
     public static final String NOT_EXISTING_EMAIL = "test@mail.test";
@@ -50,7 +50,7 @@ public class BookingFacadeTest {
 
     @Before
     public void setUp() throws Exception {
-        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
     @Test
@@ -92,7 +92,8 @@ public class BookingFacadeTest {
     @Test
     @Rollback(true)
     public void testGetEventsForDay() throws Exception {
-        Date date = simpleDateFormat.parse(SECOND_EVENT_DATE);
+        Calendar date = Calendar.getInstance();
+        date.setTime(simpleDateFormat.parse(SECOND_EVENT_DATE));
         List<Event> events = bookingFacade.getEventsForDay(date, 4, 1);
         assertEquals(1, events.size());
     }
@@ -100,7 +101,8 @@ public class BookingFacadeTest {
     @Test
     @Rollback(true)
     public void testIfGetEventsForDayReturnCorrectEvents() throws Exception {
-        Date date = simpleDateFormat.parse(SECOND_EVENT_DATE);
+        Calendar date = Calendar.getInstance();
+        date.setTime(simpleDateFormat.parse(SECOND_EVENT_DATE));
         List<Event> events = bookingFacade.getEventsForDay(date, 4, 1);
         assertEquals(bookingFacade.getEventById(SECOND_ID), events.get(0));
     }
@@ -108,11 +110,11 @@ public class BookingFacadeTest {
     @Test
     @Rollback(true)
     public void testCreateEvent() throws Exception {
-        Date testDate = simpleDateFormat.parse(TEST_EVENT_DATE);
+        Calendar testDate = Calendar.getInstance();
+        testDate.setTime(simpleDateFormat.parse(TEST_EVENT_DATE));
         Event event = new EventImpl("Test Event", testDate, 0);
         Event createdEvent = bookingFacade.createEvent(event);
         assertTrue(createdEvent.getId() > 0);
-        bookingFacade.deleteEvent(createdEvent.getId());
     }
 
     @Test
@@ -126,7 +128,8 @@ public class BookingFacadeTest {
     @Test
     @Rollback(true)
     public void testCreateNotValidEventWithoutTitle() throws Exception {
-        Date testDate = simpleDateFormat.parse(SECOND_EVENT_DATE);
+        Calendar testDate = Calendar.getInstance();
+        testDate.setTime(simpleDateFormat.parse(SECOND_EVENT_DATE));
         Event event = new EventImpl(null, testDate, 0);
         Event createdEvent = bookingFacade.createEvent(event);
         assertNull(createdEvent);
@@ -135,11 +138,12 @@ public class BookingFacadeTest {
     @Test
     @Rollback(true)
     public void testUpdateEvent() throws Exception {
-        Date testDate = simpleDateFormat.parse(TEST_EVENT_DATE);
+        Calendar testDate = Calendar.getInstance();
+        testDate.setTime(simpleDateFormat.parse(TEST_EVENT_DATE));
         Event event = new EventImpl(THIRD_ID, TEST_EVENT_TITLE, testDate, 0);
         Event previousEvent = bookingFacade.getEventById(THIRD_ID);
         Event updatedEvent = bookingFacade.updateEvent(event);
-        assertEquals(previousEvent, updatedEvent);
+        assertNotEquals(previousEvent, updatedEvent);
     }
 
     @Test
@@ -152,7 +156,8 @@ public class BookingFacadeTest {
     @Test
     @Rollback(true)
     public void testUpdateEventWithoutTitle() throws Exception {
-        Date testDate = simpleDateFormat.parse(TEST_EVENT_DATE);
+        Calendar testDate = Calendar.getInstance();
+        testDate.setTime(simpleDateFormat.parse(TEST_EVENT_DATE));
         Event event = new EventImpl(SECOND_ID, null, testDate, 0);
         assertNull(bookingFacade.updateEvent(event));
     }
@@ -160,7 +165,8 @@ public class BookingFacadeTest {
     @Test
     @Rollback(true)
     public void testUpdateEventWithInvalidId() throws Exception {
-        Date testDate = simpleDateFormat.parse(TEST_EVENT_DATE);
+        Calendar testDate = Calendar.getInstance();
+        testDate.setTime(simpleDateFormat.parse(TEST_EVENT_DATE));
         Event event = new EventImpl(0, TEST_EVENT_TITLE, testDate, 0);
         assertNull(bookingFacade.updateEvent(event));
     }
@@ -171,7 +177,6 @@ public class BookingFacadeTest {
     public void testDeleteEvent() throws Exception {
         Event event = bookingFacade.getEventById(FOURTH_ID);
         assertTrue(bookingFacade.deleteEvent(FOURTH_ID));
-        bookingFacade.createEvent(event);
     }
 
     @Test
@@ -242,7 +247,7 @@ public class BookingFacadeTest {
         User user = new UserImpl(SECOND_ID, TEST_USER_NAME, TEST_USER_EMAIL);
         User previousUser = bookingFacade.getUserById(SECOND_ID);
         User updatedUser = bookingFacade.updateUser(user);
-        assertEquals(previousUser, updatedUser);
+        assertNotEquals(previousUser, updatedUser);
     }
 
     @Test

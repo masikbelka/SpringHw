@@ -9,7 +9,7 @@ public interface UserDao {
 
     User update(User user);
 
-    boolean delete(long userId);
+    boolean delete(Long userId);
 
     List<User> getUsersByName(String name, int pageSize, int pageNum);
 

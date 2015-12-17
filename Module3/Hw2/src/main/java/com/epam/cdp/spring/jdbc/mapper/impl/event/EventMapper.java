@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 /**
  * Created by Yurii Chukhlatyi
@@ -20,8 +21,8 @@ public class EventMapper implements InsertQueryMapper<Event>, RowMapper<Event>, 
     @Override
     public void mapQuery(Event entity, PreparedStatement statement) throws SQLException {
         statement.setString(1, entity.getTitle());
-        statement.setDouble(2, entity.getTicketPrice());
-        statement.setDate(2, new Date(entity.getDate().getTime()));
+        statement.setDate(2, new Date(entity.getDate().getTimeInMillis()));
+        statement.setDouble(3, entity.getTicketPrice());
     }
 
     @Override
@@ -30,11 +31,13 @@ public class EventMapper implements InsertQueryMapper<Event>, RowMapper<Event>, 
     }
 
     private Event getEvent(ResultSet rs) throws SQLException {
+        Calendar date = Calendar.getInstance();
+        date.setTime(rs.getDate("event_date"));
         Event event = new EventImpl();
         event.setId(rs.getLong("event_id"));
         event.setTitle(rs.getString("event_title"));
         event.setTicketPrice(rs.getDouble("event_ticket_price"));
-        event.setDate(rs.getDate("event_date"));
+        event.setDate(date);
         return event;
     }
 
@@ -42,7 +45,7 @@ public class EventMapper implements InsertQueryMapper<Event>, RowMapper<Event>, 
     public Object[] mapUpdateQuery(Event entity) {
         Object[] params = new Object[4];
         params[0] = entity.getTitle();
-        params[1] = new Date(entity.getDate().getTime());
+        params[1] = new Date(entity.getDate().getTimeInMillis());
         params[2] = entity.getTicketPrice();
         params[3] = entity.getId();
         return params;

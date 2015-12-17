@@ -14,11 +14,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserAccountDAOImp implements UserAccountDAO {
 
-    private static final String CREATE = "INSERT INTO user_account (user_id, funds) VALUES (?, ?)";
+    private static final String CREATE = "INSERT INTO user_account (user_id, user_account_funds) VALUES (?, ?)";
     private static final String GET_BY_USER = "SELECT * FROM user_account WHERE user_id = ?";
     private static final String GET_BY_ID = "SELECT * FROM user_account WHERE user_account_id = ?";
     private static final String DELETE_BY_ID = "DELETE FROM user_account WHERE user_account_id = ?";
-    private static final String UPDATE = "UPDATE user_account SET funds = ? WHERE user_account_id = ?";
+    private static final String UPDATE = "UPDATE user_account SET user_account_funds = ? WHERE user_account_id = ?";
     private static final String DELETE_BY_USER_ID = "DELETE FROM user_account WHERE user_id = ?";
     public static final String IS_USER_ACCOUNT_FOR_USER_EXIST = "SELECT COUNT(*) FROM user_account WHERE user_id = ?";
     public static final String IS_USER_ACCOUNT_EXIST = "SELECT COUNT(*) FROM user_account WHERE user_account_id = ?";
@@ -57,12 +57,12 @@ public class UserAccountDAOImp implements UserAccountDAO {
 
     @Override
     public boolean deleteUserAccountByUser(long userId) {
-        return extendedJDBCTemplate.update(DELETE_BY_USER_ID, Integer.class, userId) > 0;
+        return extendedJDBCTemplate.update(DELETE_BY_USER_ID, userId) > 0;
     }
 
     @Override
     public boolean update(UserAccount userAccount) {
-        return extendedJDBCTemplate.update(UPDATE, userAccountMapper, userAccount) > 0;
+        return extendedJDBCTemplate.updateEntity(UPDATE, userAccountMapper, userAccount) > 0;
     }
 
     @Override

@@ -17,14 +17,14 @@ import java.util.List;
 @Repository
 public class TicketDaoImpl implements TicketDao {
 
-    private static final String CREATE = "INSERT INTO ticket (event_id, user_id, category_id, place) VALUES (?, ?, ?, ?)";
+    private static final String CREATE = "INSERT INTO ticket (event_id, user_id, ticket_category_id, place) VALUES (?, ?, ?, ?)";
     private static final String GET_BOOKED_TICKETS_PAGE = "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY ticket_id) AS RowNum, * FROM ticket) "
             + "AS RowConstrainedResult WHERE RowNum > ? AND RowNum <= ?";
     private static final String GET_BOOKED_TICKETS_PAGE_BY_USER = "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY ticket_id) AS RowNum, * FROM ticket WHERE user_id = ?) "
             + "AS RowConstrainedResult WHERE RowNum > ? AND RowNum <= ?";
     private static final String GET_BOOKED_TICKETS_BY_EVENT = "SELECT * FROM ticket WHERE event_id = ?";
     private static final String GET_BOOKED_TICKETS_BY_USER = "SELECT * FROM ticket WHERE user_id = ?";
-    private static final String IS_BOOKING_AVAILABLE = "SELECT COUNT(*) FROM ticket WHERE event_id = ? AND place = ? AND category_id = ?";
+    private static final String IS_BOOKING_AVAILABLE = "SELECT COUNT(*) FROM ticket WHERE event_id = ? AND place = ? AND ticket_category_id = ?";
 
 
     @Autowired

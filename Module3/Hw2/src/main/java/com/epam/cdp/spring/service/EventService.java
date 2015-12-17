@@ -2,7 +2,7 @@ package com.epam.cdp.spring.service;
 
 import com.epam.cdp.spring.model.Event;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public interface EventService {
@@ -10,7 +10,7 @@ public interface EventService {
 
     List<Event> getEventsByTitle(String title, int pageSize, int pageNum);
 
-    List<Event> getEventsForDay(Date day, int pageSize, int pageNum);
+    List<Event> getEventsForDay(Calendar day, int pageSize, int pageNum);
 
     Event createEvent(Event event);
 
