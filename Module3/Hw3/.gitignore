@@ -1,0 +1,10 @@
+*.class
+.gradle/
+.idea/
+build/
+gradle/
+*.test
+gradlew.bat
+out/
+target/
+classes/
