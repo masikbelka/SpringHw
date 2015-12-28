@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
         List<User> users = new ArrayList<>();
 
-        if (name != null) {
-            users = userDao.getUsersByName(name, pageSize, pageNum);
+        if (name != null && isPageSizeAndPageNumValid(pageSize, pageNum)) {
+            users = userDao.getUsersByName(name, getStartRow(pageSize, pageNum), getLastRow(pageSize, pageNum));
         } else {
             LOGGER.error("User name can not be null!");
         }
@@ -102,5 +102,22 @@ public class UserServiceImpl implements UserService {
 
     private boolean isUserValid(User user) {
         return user != null && user.getName() != null && !user.getName().isEmpty() && EmailValidator.validate(user.getEmail());
+    }
+
+    private int getStartRow(int pageSize, int pageNum) {
+        return pageSize * (pageNum - 1);
+    }
+
+    private int getLastRow(int pageSize, int pageNum) {
+        return pageSize * pageNum;
+    }
+
+    private boolean isPageSizeAndPageNumValid(int pageSize, int pageNum) {
+        boolean isValid = true;
+        if (pageSize < 1 || pageNum < 1) {
+            LOGGER.error(String.format("Invalid parameters {pageSize:%d} {pageNum:%d}", pageSize, pageNum));
+            isValid = false;
+        }
+        return isValid;
     }
 }

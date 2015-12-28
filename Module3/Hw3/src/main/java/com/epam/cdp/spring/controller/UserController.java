@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 /**
  * Created by Yurii Chukhlatyi
  */
@@ -26,11 +28,18 @@ public class UserController {
         return "redirect:profile/" + createdUser.getId();
     }
 
-    @RequestMapping(value = "/profile/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile/id/{userId}", method = RequestMethod.GET)
     public String getUser(@PathVariable long userId, Model model) {
         User user = bookingFacade.getUserById(userId);
         model.addAttribute("user", user);
-        return "userProfile";
+        return "user/userProfile";
+    }
+
+    @RequestMapping(value = "/profile/email/{email}", method = RequestMethod.GET)
+    public String getUserByEmail(@PathVariable String email, Model model) {
+        User user = bookingFacade.getUserByEmail(email);
+        model.addAttribute("user", user);
+        return "user/userProfile";
     }
 
     @RequestMapping(value = "/delete/{userId}", method = RequestMethod.POST)
@@ -42,7 +51,28 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String userRegistration() {
-        return "registration";
+        return "user/registration";
+    }
+
+    @RequestMapping(value = "/byName/{name}/{pageSize}/{pageNum}", method = RequestMethod.GET)
+    public String getUsers(@PathVariable String name, @PathVariable int pageSize, @PathVariable int pageNum, Model model) {
+        List<User> users = bookingFacade.getUsersByName(name, pageSize, pageNum);
+        model.addAttribute("users", users);
+        return "user/users";
+    }
+
+    @RequestMapping(value = "/edit/{userId}", method = RequestMethod.GET)
+    public String editEvent(@PathVariable long userId, Model model) {
+        User user = bookingFacade.getUserById(userId);
+        model.addAttribute("user", user);
+        return "user/edit";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateEvent(UserImpl user, Model model) {
+        User updatedUser = bookingFacade.updateUser(user);
+        model.addAttribute("event", updatedUser);
+        return "redirect:profile/id/" + updatedUser.getId();
     }
 }
 

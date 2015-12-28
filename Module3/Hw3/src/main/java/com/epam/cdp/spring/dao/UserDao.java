@@ -11,7 +11,7 @@ public interface UserDao {
 
     boolean delete(Long userId);
 
-    List<User> getUsersByName(String name, int pageSize, int pageNum);
+    List<User> getUsersByName(String name, int startRow, int lastRow);
 
     User getUserByEmail(String email);
 

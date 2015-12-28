@@ -1,5 +1,6 @@
 package com.epam.cdp.spring.controller.exception;
 
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 /**
  * Created by Yurii Chukhlatyi
  */
+@ControllerAdvice
 public class ExceptionHandlerController {
 
     public static final String ERROR_VIEW = "error";

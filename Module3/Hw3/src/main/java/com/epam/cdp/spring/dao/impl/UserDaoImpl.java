@@ -57,9 +57,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        int startRow = pageSize * pageNum;
-        return extendedJDBCTemplate.query(GET_USERS_BY_NAME, usersResultSetExtractor, name.trim(), startRow, pageSize);
+    public List<User> getUsersByName(String name, int startRow, int lastRow) {
+        return extendedJDBCTemplate.query(GET_USERS_BY_NAME, usersResultSetExtractor, name.trim(), startRow, startRow);
     }
 
     @Override
