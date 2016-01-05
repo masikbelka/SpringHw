@@ -2,7 +2,7 @@ package com.epam.cdp.spring.dao.impl;
 
 import com.epam.cdp.spring.dao.UserAccountDAO;
 import com.epam.cdp.spring.jdbc.ExtendedJDBCTemplate;
-import com.epam.cdp.spring.jdbc.mapper.impl.userAccount.UserAccountMapper;
+import com.epam.cdp.spring.jdbc.mapper.impl.UserAccountMapper;
 import com.epam.cdp.spring.model.UserAccount;
 import com.epam.cdp.spring.model.impl.UserAccountImpl;
 import org.springframework.beans.factory.annotation.Autowired;

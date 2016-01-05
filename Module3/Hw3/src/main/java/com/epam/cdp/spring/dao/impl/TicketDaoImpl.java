@@ -2,8 +2,8 @@ package com.epam.cdp.spring.dao.impl;
 
 import com.epam.cdp.spring.dao.TicketDao;
 import com.epam.cdp.spring.jdbc.ExtendedJDBCTemplate;
-import com.epam.cdp.spring.jdbc.extractor.ticket.TicketsResultSetExtractor;
-import com.epam.cdp.spring.jdbc.mapper.impl.ticket.TicketMapper;
+import com.epam.cdp.spring.jdbc.extractor.TicketsResultSetExtractor;
+import com.epam.cdp.spring.jdbc.mapper.impl.TicketMapper;
 import com.epam.cdp.spring.model.Event;
 import com.epam.cdp.spring.model.Ticket;
 import com.epam.cdp.spring.model.TicketCategory;

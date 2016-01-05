@@ -2,8 +2,8 @@ package com.epam.cdp.spring.dao.impl;
 
 import com.epam.cdp.spring.dao.EventDao;
 import com.epam.cdp.spring.jdbc.ExtendedJDBCTemplate;
-import com.epam.cdp.spring.jdbc.extractor.event.EventResultSetExtractor;
-import com.epam.cdp.spring.jdbc.mapper.impl.event.EventMapper;
+import com.epam.cdp.spring.jdbc.extractor.EventResultSetExtractor;
+import com.epam.cdp.spring.jdbc.mapper.impl.EventMapper;
 import com.epam.cdp.spring.model.Event;
 import com.epam.cdp.spring.model.impl.EventImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,8 @@ package com.epam.cdp.spring.dao.impl;
 
 import com.epam.cdp.spring.dao.UserDao;
 import com.epam.cdp.spring.jdbc.ExtendedJDBCTemplate;
-import com.epam.cdp.spring.jdbc.extractor.user.UsersResultSetExtractor;
-import com.epam.cdp.spring.jdbc.mapper.impl.user.UserMapper;
+import com.epam.cdp.spring.jdbc.extractor.UsersResultSetExtractor;
+import com.epam.cdp.spring.jdbc.mapper.impl.UserMapper;
 import com.epam.cdp.spring.model.User;
 import com.epam.cdp.spring.model.impl.UserImpl;
 import org.springframework.beans.factory.annotation.Autowired;
